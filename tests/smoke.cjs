@@ -1,8 +1,12 @@
 const fs=require("node:fs"),assert=require("node:assert/strict");
 const html=fs.readFileSync("index.html","utf8"),js=fs.readFileSync("app.js","utf8"),css=fs.readFileSync("style.css","utf8"),meta=JSON.parse(fs.readFileSync("version.json","utf8"));
-assert(html.includes('name="impulso-form-version" content="v2.0.1"'));
-assert(html.includes('id="impulso-form-version">Formulário v2.0.1'));
-assert.equal(meta.formVersion,"v2.0.1");
+assert(html.includes('name="impulso-form-version" content="v2.0.2"'));
+assert(html.includes('id="impulso-form-version">Formulário v2.0.2'));
+assert.equal(meta.formVersion,"v2.0.2");
+assert(html.includes('id="stage-access"')&&html.includes('id="survey-content" hidden'));
+assert(html.includes('id="access-login"')&&html.includes('id="access-reactivate"')&&html.includes('id="access-register"'));
+assert(html.includes("impulso-portal-staging.impulsoflow-f91.workers.dev/minha-conta"));
+assert(js.includes("function showDemo")&&js.includes("function showAccess")&&js.includes("let demoActive=false"));
 assert(html.includes('id="profile-form"')&&html.includes('id="consent"'));
 assert(html.includes('id="stage-questions"')&&html.includes('id="stage-results"'));
 assert(js.includes("const ITEMS = [")&&js.includes("const answers = Array(10)"));
@@ -11,4 +15,4 @@ assert(html.includes('id="share-btn"')&&js.includes("navigator.canShare")&&js.in
 assert(js.includes('data.emailStatus!=="sent"')&&js.includes("!data.pdfUrl"));
 assert(css.includes("@media(max-width:640px)"));
 assert(!js.includes("apiKey=")&&!js.includes("2026Impulso$"));
-console.log("MISSÃO v2.0.1: validação estática aprovada.");
+console.log("MISSÃO v2.0.2: validação estática aprovada.");
