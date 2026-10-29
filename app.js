@@ -1,6 +1,6 @@
 (() => {
 "use strict";
-const VERSION = "v2.0.0";
+const VERSION = "v2.0.1";
 const ITEMS = [
  {dimension:"presenca",text:"Consigo explicar, com minhas próprias palavras, o que dá direção à minha vida."},
  {dimension:"busca",text:"Tenho reservado tempo para descobrir quais contribuições desejo oferecer às pessoas ao meu redor."},
@@ -242,6 +242,28 @@ async function sendIfConfigured(){
     $("delivery-status").className="delivery-status warn";$("retry-send").hidden=false;
   }
 }
+async function sharePdf(){
+  if(!profile || !outcome)return;
+  try{
+    if(!doc)doc=makePdf();
+    const fileName="MISSAO_Impulso_"+escapeFile(profile.nome)+"_"+new Date().toISOString().slice(0,10)+".pdf";
+    const blob=doc.output("blob");
+    const file=new File([blob],fileName,{type:"application/pdf"});
+    if(typeof navigator.share==="function" && typeof navigator.canShare==="function" && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:"Relatório MISSÃO — Instituto Impulso",text:"Compartilho meu relatório de significado e propósito."});
+      $("delivery-status").textContent="Arquivo PDF compartilhado pelo aplicativo escolhido. Não é envio automático do Instituto Impulso.";
+      $("delivery-status").className="delivery-status good";
+    }else{
+      doc.save(fileName);
+      $("delivery-status").textContent="O navegador não oferece compartilhamento de arquivos. Baixei o PDF para que você possa anexá-lo ao seu e-mail ou WhatsApp.";
+      $("delivery-status").className="delivery-status warn";
+    }
+  }catch(error){
+    if(error && error.name==="AbortError")return;
+    $("delivery-status").textContent="Não foi possível compartilhar o arquivo. Use o botão Baixar relatório PDF.";
+    $("delivery-status").className="delivery-status warn";
+  }
+}
 function download(){
   try{if(!doc)doc=makePdf();doc.save("MISSÃO_Impulso_"+escapeFile(profile.nome)+"_"+new Date().toISOString().slice(0,10)+".pdf")}
   catch(err){$("delivery-status").textContent="Não foi possível gerar o PDF. Verifique a conexão e tente novamente."}
@@ -250,5 +272,6 @@ $("profile-form").addEventListener("submit",start);
 $("next-btn").addEventListener("click",next);
 $("back-btn").addEventListener("click",previous);
 $("download-btn").addEventListener("click",download);
+$("share-btn").addEventListener("click",()=>void sharePdf());
 $("retry-send").addEventListener("click",()=>void sendIfConfigured());
 })();
