@@ -1,6 +1,6 @@
 (() => {
 "use strict";
-const VERSION = "v2.0.1";
+const VERSION = "v2.0.2";
 const ITEMS = [
  {dimension:"presenca",text:"Consigo explicar, com minhas próprias palavras, o que dá direção à minha vida."},
  {dimension:"busca",text:"Tenho reservado tempo para descobrir quais contribuições desejo oferecer às pessoas ao meu redor."},
@@ -17,7 +17,24 @@ const LABELS = ["Não me descreve","Descreve muito pouco","Descreve pouco","Desc
 const $ = (id) => document.getElementById(id);
 const answers = Array(10).fill(null);
 let profile=null, current=0, outcome=null, chart=null, doc=null, submissionId=null;
+let demoActive=false;
+function showDemo(){
+  demoActive=true;
+  $("stage-access").hidden=true;
+  $("survey-content").hidden=false;
+  $("mission-demo-warning").hidden=false;
+  stage("intro");
+}
+function showAccess(){
+  demoActive=false;
+  $("stage-access").hidden=false;
+  $("survey-content").hidden=true;
+  $("mission-demo-warning").hidden=true;
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
 function stage(which){
+  if(!demoActive)return;
   ["intro","questions","results"].forEach((x,i)=>{
     $("stage-"+x).classList.toggle("active",x===which);
     $("tab-"+(i+1)).className="step"+(x===which?" active":i<["intro","questions","results"].indexOf(which)?" done":"");
@@ -268,6 +285,8 @@ function download(){
   try{if(!doc)doc=makePdf();doc.save("MISSÃO_Impulso_"+escapeFile(profile.nome)+"_"+new Date().toISOString().slice(0,10)+".pdf")}
   catch(err){$("delivery-status").textContent="Não foi possível gerar o PDF. Verifique a conexão e tente novamente."}
 }
+$("access-demo-btn").addEventListener("click",showDemo);
+$("access-back").addEventListener("click",showAccess);
 $("profile-form").addEventListener("submit",start);
 $("next-btn").addEventListener("click",next);
 $("back-btn").addEventListener("click",previous);
