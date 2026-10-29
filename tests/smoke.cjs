@@ -1,13 +1,14 @@
 const fs=require("node:fs"),assert=require("node:assert/strict");
 const html=fs.readFileSync("index.html","utf8"),js=fs.readFileSync("app.js","utf8"),css=fs.readFileSync("style.css","utf8"),meta=JSON.parse(fs.readFileSync("version.json","utf8"));
-assert(html.includes('name="impulso-form-version" content="v2.0.0"'));
-assert(html.includes('id="impulso-form-version">Formulário v2.0.0'));
-assert.equal(meta.formVersion,"v2.0.0");
+assert(html.includes('name="impulso-form-version" content="v2.0.1"'));
+assert(html.includes('id="impulso-form-version">Formulário v2.0.1'));
+assert.equal(meta.formVersion,"v2.0.1");
 assert(html.includes('id="profile-form"')&&html.includes('id="consent"'));
 assert(html.includes('id="stage-questions"')&&html.includes('id="stage-results"'));
 assert(js.includes("const ITEMS = [")&&js.includes("const answers = Array(10)"));
 assert(js.includes("doc.save")&&js.includes("sendIfConfigured"));
+assert(html.includes('id="share-btn"')&&js.includes("navigator.canShare")&&js.includes("function sharePdf"));
 assert(js.includes('data.emailStatus!=="sent"')&&js.includes("!data.pdfUrl"));
 assert(css.includes("@media(max-width:640px)"));
 assert(!js.includes("apiKey=")&&!js.includes("2026Impulso$"));
-console.log("MISSÃO v2.0.0: validação estática aprovada.");
+console.log("MISSÃO v2.0.1: validação estática aprovada.");

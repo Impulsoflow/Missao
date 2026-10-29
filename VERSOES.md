@@ -1,5 +1,10 @@
 # Histórico de versões — Pesquisa MISSÃO
 
+## v2.0.1 — 29/10/2026
+- Botão de compartilhamento de PDF via recursos nativos do celular, com download alternativo.
+- Sem exposição automática dos dados do participante. Envio por e-mail e Google Drive institucional continuam pendentes de backend protegido.
+
+
 ## v2.0.0 — 29/10/2026
 - Nova experiência institucional com 10 reflexões autorais de significado e propósito, sem reivindicar validação do MLQ.
 - Cadastro: nome, WhatsApp, idade, profissão, escolaridade, e-mail e consentimento.
