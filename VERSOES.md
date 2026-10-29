@@ -1,5 +1,10 @@
 # Histórico de versões — Pesquisa MISSÃO
 
+## v2.0.2 — 29/10/2026
+- Primeira tela com três escolhas vinculadas às rotas reais do portal de contas: entrar, ativar/reativar e cadastrar.
+- O questionário independente permanece acessível apenas como demonstração explícita, sem insinuar autenticação, histórico, e-mail ou Drive confirmados.
+- Nenhuma migração de dados, credencial ou mudança nas dez perguntas e nos cálculos.
+
 ## v2.0.1 — 29/10/2026
 - Botão de compartilhamento de PDF via recursos nativos do celular, com download alternativo.
 - Sem exposição automática dos dados do participante. Envio por e-mail e Google Drive institucional continuam pendentes de backend protegido.
